@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор синтепона</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .calculator {
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 5px;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            cursor: pointer;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f5f5f5;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <h2>Калькулятор синтепона</h2>
+        
+        <div class="input-group">
+            <label>Длина (см):</label>
+            <input type="number" id="length" value="40">
+        </div>
+        
+        <div class="input-group">
+            <label>Ширина (см):</label>
+            <input type="number" id="width" value="40">
+        </div>
+        
+        <div class="input-group">
+            <label>Высота (см):</label>
+            <input type="number" id="height" value="10">
+        </div>
+        
+        <button onclick="calculate()">Рассчитать</button>
+        
+        <div class="result" id="result">
+            <p>Количество синтепона: <span id="filler">0</span> кг</p>
+            <p>Стоимость: <span id="cost">0</span> руб (206 руб/кг)</p>
+        </div>
+    </div>
+
+    <script>
+        // Константы
+        const PRICE_PER_KG = 206; // Цена за кг
+        const BASE_VOLUME = 16000; // Объем базовой подушки 40×40×10 = 16000 см³
+        const BASE_FILLER = 0.76;  // Кг синтепона для базовой подушки
+
+        function calculate() {
+            // Получаем размеры
+            const length = parseFloat(document.getElementById('length').value);
+            const width = parseFloat(document.getElementById('width').value);
+            const height = parseFloat(document.getElementById('height').value);
+            
+            // Рассчитываем объем
+            const volume = length * width * height;
+            
+            // Рассчитываем количество синтепона
+            const filler = (volume / BASE_VOLUME) * BASE_FILLER;
+            
+            // Рассчитываем стоимость
+            const cost = filler * PRICE_PER_KG;
+            
+            // Выводим результаты
+            document.getElementById('filler').textContent = filler.toFixed(2);
+            document.getElementById('cost').textContent = cost.toFixed(2);
+        }
+        
+        // Первоначальный расчет
+        calculate();
+    </script>
+</body>
+</html>
